@@ -7,11 +7,11 @@ import java.util.Random;
 import jplay.URL;
 import jplay.Window;
 
-public class ammobox extends itens{
+public class Ammobox extends Itens{
 	
 	private Random rnd = new Random();
 	
-	public ammobox(int x, int y){
+	public Ammobox(int x, int y){
 		super(URL.sprite("ammobox.png"), 1);
 		this.x = x;
 		this.y = y;
@@ -23,7 +23,7 @@ public class ammobox extends itens{
 	private static Font f = new Font("arial", Font.BOLD, 30);
 	
 	public static void balas(Window janela, Jogador jogador) {
-		janela.drawText("Balas: " + jogador.muni + "/" + jogador.pente, cenario1.Xj/2-100 , 30, Color.GREEN, f);
+		janela.drawText("Balas: " + jogador.muni + "/" + jogador.pente, Cenario1.Xj/2-100 , 30, Color.GREEN, f);
 	}
 	
 	public void pegar(Jogador jogador) {

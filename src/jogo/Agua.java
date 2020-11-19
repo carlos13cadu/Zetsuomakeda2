@@ -8,13 +8,13 @@ import jplay.Keyboard;
 import jplay.URL;
 import jplay.Window;
 
-public class agua extends itens {
+public class Agua extends Itens {
 	
 	private int J;
-	public static agua Agua;
+	public static Agua Agua;
 	public boolean firstAgua = false;
 
-	public agua(int x, int y) {
+	public Agua(int x, int y) {
 		super(URL.sprite("agua.png"), 2);
 		this.x = x;
 		this.y = y;
@@ -42,13 +42,13 @@ public class agua extends itens {
 	
 	public void beber2(Keyboard teclado) {
 		if(teclado.keyDown(KeyEvent.VK_N)) {
-			if (invetario.iditens[0][0] >= 1) {
+			if (Invetario.iditens[0][0] >= 1) {
 				if (Jogador.sede + 300 <= 1000) {
-					invetario.iditens[0][0]--;
+					Invetario.iditens[0][0]--;
 					Jogador.sede += 300;
 				}else if (Jogador.sede != 1000){
 					Jogador.sede = 1000;
-					invetario.iditens[0][0]--;
+					Invetario.iditens[0][0]--;
 				}
 				Agua.setCurrFrame(0);
 			}
@@ -67,14 +67,14 @@ public class agua extends itens {
 			if(!firstAgua) {
 				firstAgua = true;
 			}
-			for(int i = 0; i < invetario.barra[0].length; i++) {
-				if(invetario.barra[0][i] == 0) {
+			for(int i = 0; i < Invetario.barra[0].length; i++) {
+				if(Invetario.barra[0][i] == 0) {
 					this.qtd += 1;
-					invetario.barra[0][i] = 1;
-					invetario.iditens[0][0] += 1;
-					invetario.iditens[1][0] = i;
+					Invetario.barra[0][i] = 1;
+					Invetario.iditens[0][0] += 1;
+					Invetario.iditens[1][0] = i;
 					this.x = 10_000;
-					Agua = new agua(invetario.barra[1][i], invetario.barra[2][i]);
+					Agua = new Agua(Invetario.barra[1][i], Invetario.barra[2][i]);
 					break;
 				}
 			}

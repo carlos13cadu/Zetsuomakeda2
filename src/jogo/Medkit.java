@@ -6,9 +6,9 @@ import java.awt.Font;
 import jplay.URL;
 import jplay.Window;
 
-public class medkit extends itens{
+public class Medkit extends Itens{
 
-	public medkit(int x, int y) {
+	public Medkit(int x, int y) {
 		super(URL.sprite("medkit.png"), 1);
 		this.x = x;
 		this.y = y;
@@ -17,7 +17,7 @@ public class medkit extends itens{
 	private static Font f = new Font("arial", Font.BOLD, 30);
 	
 	public static void medkitqtd(Window janela, Jogador jogador) {
-		janela.drawText("Medkit: " + jogador.medqtd, cenario1.Xj-200, 30, Color.GREEN, f);
+		janela.drawText("Medkit: " + jogador.medqtd, Cenario1.Xj-200, 30, Color.GREEN, f);
 	}
 	
 	public void pegar(Jogador jogador) {

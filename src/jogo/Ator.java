@@ -9,7 +9,7 @@ import jplay.Scene;
 import jplay.Sprite;
 import jplay.TileInfo;
 
-public class ator extends Sprite {
+public class Ator extends Sprite {
 
 	double velocidade = 1;
 	protected int direcao = 3;
@@ -18,7 +18,7 @@ public class ator extends Sprite {
 	Controle controle = new Controle();
 	public double energia = 100;
 	
-	public ator(String fileName, int numFrames) {
+	public Ator(String fileName, int numFrames) {
 		super(fileName, numFrames);
 	}
 	

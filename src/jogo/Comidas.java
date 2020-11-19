@@ -1,8 +1,8 @@
 package jogo;
 
-public class comidas extends itens{
+public class Comidas extends Itens{
 
-	public comidas(String fileName, int numFrames) {
+	public Comidas(String fileName, int numFrames) {
 		super(fileName, numFrames);
 		// TODO Auto-generated constructor stub
 	}

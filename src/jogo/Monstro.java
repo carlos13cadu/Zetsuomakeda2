@@ -2,10 +2,10 @@ package jogo;
 
 import jplay.URL;
 
-public class enemy extends ator{
+public class Monstro extends Ator{
 
 	private double ataque = 0.25;
-	public enemy(int x, int y) {
+	public Monstro(int x, int y) {
 		super(URL.sprite("zumbi.png"), 16);
 		this.x = x;
 		this.y = y;
@@ -67,7 +67,7 @@ public class enemy extends ator{
 	public void atacar(Jogador jogador) {
 		if(this.collided(jogador)) {
 			Jogador.energia -= this.ataque;
-			if(Jogador.rage < 1000 && cenario1.furia == false) {
+			if(Jogador.rage < 1000 && Cenario1.furia == false) {
 				Jogador.rage += 0.25;
 			}
 		}

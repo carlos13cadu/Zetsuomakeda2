@@ -18,39 +18,27 @@ import jplay.Sprite;
 import jplay.URL;
 import jplay.Window;
 
-public class cenario1 extends cenario{
+public class Cenario1 extends Cenario{
 	
-	boolean exe;
 	static boolean col = false;
 	static double colx;
 	static double coly;
 	private boolean iva = false;
 	private static int h;
 	private static Sprite aux = null;
-	private Mouse mouse;
 	static boolean furia = false;
-	private Window janela;
-	private Scene cena;
-	private Jogador jogador;
-	private invetario Invetario;
-	private arma Arma;
-	private arma ak47 = new arma(400,300,18,30,"ak47p.png");
-	private medkit VMedkit[];
-	private ammobox VAmmobox[];
-	private agua Agua;
-	private static ammobox am = new ammobox(326, 235);
-	private Keyboard teclado;
-	private Vector<enemy> lenemy = new Vector<enemy>();
+	private Arma Arma;
+	private Arma ak47 = new Arma(400,300,18,30,"ak47p.png");
+	private Agua Agua;
+	private static Ammobox am = new Ammobox(326, 235);
+	private Vector<Monstro> lenemy = new Vector<Monstro>();
 	private Vector<Zumbi2> lzumbi2 = new Vector<Zumbi2>();
 	private int Xs, Ys, X2, Y2;
 	static int Xj, Yj;
 	private int [] v = new int[100];
 	private int [] v2 = new int[10];
-	private Random rnd = new Random();
-	teste t = new teste(janela, false);
 	private Point posi;
 	private boolean hold = false;
-	private Habilidades habilidades;
 	
 	private Dialogo dialogos;
 	private String frase = "Bem-vindo ao Zetsuomakeda, tente sobreviver as hordas de zumbis e    colete recursos para continuar vivo!";
@@ -66,16 +54,10 @@ public class cenario1 extends cenario{
 	private boolean firstblink2 = false;
 	private boolean firstwater = false;
 	
-	private double averageFPS;
-	long startTime;
-	long totalTime = 0;
-	int frameCount = 0;
-	int MaxFrameCount = 30;
-	
 	private Explosao explo;
 	private List<Explosao> lexplo = new ArrayList<Explosao>();
 
-	public cenario1(Window window){
+	public Cenario1(Window window){
 		
 		janela = window;
 		mouse = janela.getMouse();
@@ -84,15 +66,13 @@ public class cenario1 extends cenario{
 		cena = new Scene();
 		cena.loadFromFile(URL.scenario("Cenario1.scn"));
 		teclado = janela.getKeyboard();
-		Invetario = new invetario((Xj-250),(Yj-50));
-		Arma = new arma(Xj-243, Yj-45, 35, 15, "arma.png");
+		Invetario = new Invetario((Xj-250),(Yj-50));
+		Arma = new Arma(Xj-243, Yj-45, 35, 15, "arma.png");
 		jogador = new Jogador(640,320);
 		explo = new Explosao(640, 320);
-		Agua = new agua(300, 30);
-		VAmmobox = new ammobox[10];
-		VMedkit = new medkit[5];
-		invetario.sitens[0] = agua.Agua;
-		invetario.sitens[1] = am;
+		Agua = new Agua(300, 30);
+		Invetario.sitens[0] = Agua.Agua;
+		Invetario.sitens[1] = am;
 		habilidades = new Habilidades(janela);
 		dialogos = new Dialogo(janela);
 		
@@ -101,11 +81,7 @@ public class cenario1 extends cenario{
 	}
 	private void run() {
 		exe = true;
-		for (int i = 0; i < VAmmobox.length; i++) {
-			Xs = rnd.nextInt(1000);
-			Ys = rnd.nextInt(1000);
-			VAmmobox[i]= new ammobox(Xs, Ys);
-		}
+		adcionarAmmobox(10);
 		new Thread() {
             public void run() {
             	while(exe) {
@@ -113,7 +89,7 @@ public class cenario1 extends cenario{
                         sleep(3000);
                         Xs = rnd.nextInt(1000);
             			Ys = rnd.nextInt(1000);
-            			lenemy.add(new enemy(Xs + 1000, Ys + 1000));
+            			lenemy.add(new Monstro(Xs + 1000, Ys + 1000)); // Thread para criacao de montros na tela
                     } catch (InterruptedException ex) {
 
                     }
@@ -127,7 +103,7 @@ public class cenario1 extends cenario{
                         sleep(6500);
                         X2 = rnd.nextInt(1000);
             			Y2 = rnd.nextInt(1000);
-            			lzumbi2.add(new Zumbi2(Xs + 1000, Ys + 1000));
+            			lzumbi2.add(new Zumbi2(Xs + 1000, Ys + 1000)); // Thread para criacao de montros na tela
                     } catch (InterruptedException ex) {
 
                     }
@@ -219,12 +195,11 @@ public class cenario1 extends cenario{
             }
         }.start();
         
-		for(int i = 0; i < VMedkit.length; i++) {
-			VMedkit[i] = new medkit(rnd.nextInt(640),rnd.nextInt(640));
-		}
+		adcionarMedkit(5);
+		
 		while(exe) {
-			Jogador.curseseries = 3;
-		Jogador.rage = 1000;
+			Jogador.curseseries = 3; //teste
+			Jogador.rage = 1000; //teste
 			
 			startTime = System.nanoTime();
 			//cena.draw();
@@ -258,14 +233,14 @@ public class cenario1 extends cenario{
 				lzumbi2.get(i).raioexplo(lexplo);
 			}
 			
-			for (int i = 0; i < VAmmobox.length; i++) {
-				VAmmobox[i].desenha(cena); // adiciona todas as caixas de muniçao no jogo
-				VAmmobox[i].pegar(jogador);
+			for (int i = 0; i < vAmmobox.size(); i++) {
+				vAmmobox.get(i).desenha(cena); // adiciona todas as caixas de muniçao no jogo
+				vAmmobox.get(i).pegar(jogador);
 			}
 			
-			for (int i = 0; i < VMedkit.length; i++) {
-				VMedkit[i].desenha(cena); // adiciona todos os medkits no jogo
-				VMedkit[i].pegar(jogador);
+			for (int i = 0; i < vMedkit.size(); i++) {
+				vMedkit.get(i).desenha(cena); // adiciona todos os medkits no jogo
+				vMedkit.get(i).pegar(jogador);
 			}
 			
 			Agua.desenha(cena); // adiciona garrafa da agua no jogo
@@ -303,7 +278,7 @@ public class cenario1 extends cenario{
 			ak47.pegar(jogador);
 			
 			if(Agua.qtd >= 1) {
-				agua.Agua.draw();
+				Agua.Agua.draw();
 			}
 			
 			//iv.draw();
@@ -320,9 +295,9 @@ public class cenario1 extends cenario{
 			//teste inventario
 			
 			if(iva) {
-				for(int i = 0; i < invetario.sitens.length; i++) {
-					if(invetario.sitens[i] != null) {
-						invetario.sitens[i].draw();
+				for(int i = 0; i < Invetario.sitens.length; i++) {
+					if(Invetario.sitens[i] != null) {
+						Invetario.sitens[i].draw();
 					}
 				}
 			}
@@ -334,129 +309,129 @@ public class cenario1 extends cenario{
 						hold = false;
 						Invetario.esconde();
 					}else if(mouse.isOverArea(288, 235, 324, 265)) {
-						if(hold == false && invetario.sitens[0] != null) {
+						if(hold == false && Invetario.sitens[0] != null) {
 							hold = true;
 							h = 0;
 						}else if(hold == true){
 							hold = false;
-							if(invetario.sitens[0] == null) {
-								invetario.sitens[h].x = invetario.itens[0][0];
-								invetario.sitens[h].y = invetario.itens[1][0];
-								invetario.sitens[0] = invetario.sitens[h];
-								invetario.sitens[h] = null;
+							if(Invetario.sitens[0] == null) {
+								Invetario.sitens[h].x = Invetario.itens[0][0];
+								Invetario.sitens[h].y = Invetario.itens[1][0];
+								Invetario.sitens[0] = Invetario.sitens[h];
+								Invetario.sitens[h] = null;
 							}else {
-								invetario.sitens[h].x = invetario.itens[0][0];
-								invetario.sitens[h].y = invetario.itens[1][0];
-								invetario.sitens[0].x = invetario.itens[0][h];
-								invetario.sitens[0].y = invetario.itens[1][h];
-								aux = invetario.sitens[0];
-								invetario.sitens[0] = invetario.sitens[h];
-								invetario.sitens[h] = aux;
+								Invetario.sitens[h].x = Invetario.itens[0][0];
+								Invetario.sitens[h].y = Invetario.itens[1][0];
+								Invetario.sitens[0].x = Invetario.itens[0][h];
+								Invetario.sitens[0].y = Invetario.itens[1][h];
+								aux = Invetario.sitens[0];
+								Invetario.sitens[0] = Invetario.sitens[h];
+								Invetario.sitens[h] = aux;
 							}
 						}
 					}else if(mouse.isOverArea(324, 235, 360, 265)) {
-						if(hold == false && invetario.sitens[1] != null) {
+						if(hold == false && Invetario.sitens[1] != null) {
 							hold = true;
 							h = 1;
 						}else if(hold == true){
 							hold = false;
-							if(invetario.sitens[1] == null) {
-								invetario.sitens[h].x = invetario.itens[0][1];
-								invetario.sitens[h].y = invetario.itens[1][1];
-								invetario.sitens[1] = invetario.sitens[h];
-								invetario.sitens[h] = null;
+							if(Invetario.sitens[1] == null) {
+								Invetario.sitens[h].x = Invetario.itens[0][1];
+								Invetario.sitens[h].y = Invetario.itens[1][1];
+								Invetario.sitens[1] = Invetario.sitens[h];
+								Invetario.sitens[h] = null;
 							}else {
-								invetario.sitens[h].x = invetario.itens[0][1];
-								invetario.sitens[h].y = invetario.itens[1][1];
-								invetario.sitens[1].x = invetario.itens[0][h];
-								invetario.sitens[1].y = invetario.itens[1][h];
-								aux = invetario.sitens[1];
-								invetario.sitens[1] = invetario.sitens[h];
-								invetario.sitens[h] = aux;
+								Invetario.sitens[h].x = Invetario.itens[0][1];
+								Invetario.sitens[h].y = Invetario.itens[1][1];
+								Invetario.sitens[1].x = Invetario.itens[0][h];
+								Invetario.sitens[1].y = Invetario.itens[1][h];
+								aux = Invetario.sitens[1];
+								Invetario.sitens[1] = Invetario.sitens[h];
+								Invetario.sitens[h] = aux;
 							}
 						}
 					}else if(mouse.isOverArea(360, 235, 396, 265)) {
-						if(hold == false && invetario.sitens[2] != null) {
+						if(hold == false && Invetario.sitens[2] != null) {
 							hold = true;
 							h = 2;
 						}else if(hold == true){
 							hold = false;
-							if(invetario.sitens[2] == null) {
-								invetario.sitens[h].x = invetario.itens[0][2];
-								invetario.sitens[h].y = invetario.itens[1][2];
-								invetario.sitens[2] = invetario.sitens[h];
-								invetario.sitens[h] = null;
+							if(Invetario.sitens[2] == null) {
+								Invetario.sitens[h].x = Invetario.itens[0][2];
+								Invetario.sitens[h].y = Invetario.itens[1][2];
+								Invetario.sitens[2] = Invetario.sitens[h];
+								Invetario.sitens[h] = null;
 							}else {
-								invetario.sitens[h].x = invetario.itens[0][2];
-								invetario.sitens[h].y = invetario.itens[1][2];
-								invetario.sitens[2].x = invetario.itens[0][h];
-								invetario.sitens[2].y = invetario.itens[1][h];
-								aux = invetario.sitens[2];
-								invetario.sitens[2] = invetario.sitens[h];
-								invetario.sitens[h] = aux;
+								Invetario.sitens[h].x = Invetario.itens[0][2];
+								Invetario.sitens[h].y = Invetario.itens[1][2];
+								Invetario.sitens[2].x = Invetario.itens[0][h];
+								Invetario.sitens[2].y = Invetario.itens[1][h];
+								aux = Invetario.sitens[2];
+								Invetario.sitens[2] = Invetario.sitens[h];
+								Invetario.sitens[h] = aux;
 							}
 						}
 					}else if(mouse.isOverArea(396, 235, 422, 265)) {
-						if(hold == false && invetario.sitens[3] != null) {
+						if(hold == false && Invetario.sitens[3] != null) {
 							hold = true;
 							h = 3;
 						}else if(hold == true){
 							hold = false;
-							if(invetario.sitens[3] == null) {
-								invetario.sitens[h].x = invetario.itens[0][3];
-								invetario.sitens[h].y = invetario.itens[1][3];
-								invetario.sitens[3] = invetario.sitens[h];
-								invetario.sitens[h] = null;
+							if(Invetario.sitens[3] == null) {
+								Invetario.sitens[h].x = Invetario.itens[0][3];
+								Invetario.sitens[h].y = Invetario.itens[1][3];
+								Invetario.sitens[3] = Invetario.sitens[h];
+								Invetario.sitens[h] = null;
 							}else {
-								invetario.sitens[h].x = invetario.itens[0][3];
-								invetario.sitens[h].y = invetario.itens[1][3];
-								invetario.sitens[3].x = invetario.itens[0][h];
-								invetario.sitens[3].y = invetario.itens[1][h];
-								aux = invetario.sitens[3];
-								invetario.sitens[3] = invetario.sitens[h];
-								invetario.sitens[h] = aux;
+								Invetario.sitens[h].x = Invetario.itens[0][3];
+								Invetario.sitens[h].y = Invetario.itens[1][3];
+								Invetario.sitens[3].x = Invetario.itens[0][h];
+								Invetario.sitens[3].y = Invetario.itens[1][h];
+								aux = Invetario.sitens[3];
+								Invetario.sitens[3] = Invetario.sitens[h];
+								Invetario.sitens[h] = aux;
 							}
 						}
 					}else if(mouse.isOverArea(422, 235, 458, 265)) {
-						if(hold == false && invetario.sitens[4] != null) {
+						if(hold == false && Invetario.sitens[4] != null) {
 							hold = true;
 							h = 4;
 						}else if(hold == true){
 							hold = false;
-							if(invetario.sitens[4] == null) {
-								invetario.sitens[h].x = invetario.itens[0][4];
-								invetario.sitens[h].y = invetario.itens[1][4];
-								invetario.sitens[4] = invetario.sitens[h];
-								invetario.sitens[h] = null;
+							if(Invetario.sitens[4] == null) {
+								Invetario.sitens[h].x = Invetario.itens[0][4];
+								Invetario.sitens[h].y = Invetario.itens[1][4];
+								Invetario.sitens[4] = Invetario.sitens[h];
+								Invetario.sitens[h] = null;
 							}else {
-								invetario.sitens[h].x = invetario.itens[0][4];
-								invetario.sitens[h].y = invetario.itens[1][4];
-								invetario.sitens[4].x = invetario.itens[0][h];
-								invetario.sitens[4].y = invetario.itens[1][h];
-								aux = invetario.sitens[4];
-								invetario.sitens[4] = invetario.sitens[h];
-								invetario.sitens[h] = aux;
+								Invetario.sitens[h].x = Invetario.itens[0][4];
+								Invetario.sitens[h].y = Invetario.itens[1][4];
+								Invetario.sitens[4].x = Invetario.itens[0][h];
+								Invetario.sitens[4].y = Invetario.itens[1][h];
+								aux = Invetario.sitens[4];
+								Invetario.sitens[4] = Invetario.sitens[h];
+								Invetario.sitens[h] = aux;
 							}
 						}
 					}else if(mouse.isOverArea(458, 235, 494, 265)) {
-						if(hold == false && invetario.sitens[5] != null) {
+						if(hold == false && Invetario.sitens[5] != null) {
 							hold = true;
 							h = 5;
 						}else if(hold == true){
 							hold = false;
-							if(invetario.sitens[5] == null) {
-								invetario.sitens[h].x = invetario.itens[0][5];
-								invetario.sitens[h].y = invetario.itens[1][5];
-								invetario.sitens[5] = invetario.sitens[h];
-								invetario.sitens[h] = null;
+							if(Invetario.sitens[5] == null) {
+								Invetario.sitens[h].x = Invetario.itens[0][5];
+								Invetario.sitens[h].y = Invetario.itens[1][5];
+								Invetario.sitens[5] = Invetario.sitens[h];
+								Invetario.sitens[h] = null;
 							}else {
-								invetario.sitens[h].x = invetario.itens[0][5];
-								invetario.sitens[h].y = invetario.itens[1][5];
-								invetario.sitens[5].x = invetario.itens[0][h];
-								invetario.sitens[5].y = invetario.itens[1][h];
-								aux = invetario.sitens[5];
-								invetario.sitens[5] = invetario.sitens[h];
-								invetario.sitens[h] = aux;
+								Invetario.sitens[h].x = Invetario.itens[0][5];
+								Invetario.sitens[h].y = Invetario.itens[1][5];
+								Invetario.sitens[5].x = Invetario.itens[0][h];
+								Invetario.sitens[5].y = Invetario.itens[1][h];
+								aux = Invetario.sitens[5];
+								Invetario.sitens[5] = Invetario.sitens[h];
+								Invetario.sitens[h] = aux;
 							}
 						}
 					}
@@ -464,8 +439,8 @@ public class cenario1 extends cenario{
 			}
 			
 			if(hold) {
-				invetario.sitens[h].x = posi.getX()-15;
-				invetario.sitens[h].y = posi.getY()-10;
+				Invetario.sitens[h].x = posi.getX()-15;
+				Invetario.sitens[h].y = posi.getY()-10;
 			}
 			//
 			
@@ -474,21 +449,21 @@ public class cenario1 extends cenario{
 				janela.setFullScreen();
 				Xj = janela.getWidth();
 				Yj = janela.getHeight();
-				invetario.barra[1][0] = Xj-243;
-				invetario.barra[2][0] = Yj-45;
-				invetario.barra[1][1] = Xj-208;
-				invetario.barra[2][1] = Yj-46;
-				invetario.barra[1][2] = Xj-174;
-				invetario.barra[2][2] = Yj-46;
-				invetario.barra[1][3] = Xj-140;
-				invetario.barra[2][3] = Yj-46;
-				invetario.barra[1][4] = Xj-107;
-				invetario.barra[2][4] = Yj-46;
-				invetario.barra[1][5] = Xj-72;
-				invetario.barra[2][5] = Yj-46;
-				Invetario = new invetario((Xj-250),(Yj-50));
-				agua.Agua = new agua(invetario.barra[1][invetario.iditens[0][0]], invetario.barra[2][invetario.iditens[0][0]]);
-				Arma = new arma(invetario.barra[1][0], invetario.barra[2][0], 35, 15, "arma.png");
+				Invetario.barra[1][0] = Xj-243;
+				Invetario.barra[2][0] = Yj-45;
+				Invetario.barra[1][1] = Xj-208;
+				Invetario.barra[2][1] = Yj-46;
+				Invetario.barra[1][2] = Xj-174;
+				Invetario.barra[2][2] = Yj-46;
+				Invetario.barra[1][3] = Xj-140;
+				Invetario.barra[2][3] = Yj-46;
+				Invetario.barra[1][4] = Xj-107;
+				Invetario.barra[2][4] = Yj-46;
+				Invetario.barra[1][5] = Xj-72;
+				Invetario.barra[2][5] = Yj-46;
+				Invetario = new Invetario((Xj-250),(Yj-50));
+				Agua.Agua = new Agua(Invetario.barra[1][Invetario.iditens[0][0]], Invetario.barra[2][Invetario.iditens[0][0]]);
+				Arma = new Arma(Invetario.barra[1][0], Invetario.barra[2][0], 35, 15, "arma.png");
 			}
 			//
 			
@@ -496,14 +471,14 @@ public class cenario1 extends cenario{
 			if(!blinkrage) {
 				jogador.rage(janela);
 			}
-			ammobox.balas(janela, jogador);
-			medkit.medkitqtd(janela, jogador);
+			Ammobox.balas(janela, jogador);
+			Medkit.medkitqtd(janela, jogador);
 			if(!blinkwater) {
 				Agua.aguaqtd(janela);
 			}
 			//Agua.beber();
 			Agua.beber2(teclado);
-			this.Fps(janela);
+			fps();
 			this.pal(janela);
 			
 			janela.update();
@@ -512,13 +487,7 @@ public class cenario1 extends cenario{
 			mudarCenario2();
 			mudarCenario3();
 			
-			if(teclado.keyDown(KeyEvent.VK_K)) {
-				habilidades.Open(jogador);
-			}
-			
-			if(teclado.keyDown(Keyboard.ESCAPE_KEY)) {
-				System.exit(0);
-			}
+			comandosTeclado();
 
 			if(Jogador.energia <= 0) {
 				Jogador.rage = 0;
@@ -564,28 +533,22 @@ public class cenario1 extends cenario{
 					Som.play("fundo.wav");
 				}
 			}
-			totalTime += System.nanoTime() - startTime;
-			frameCount++;
-			if(frameCount == MaxFrameCount) {
-				averageFPS = 1000.0 / (((double) totalTime / frameCount) / 1000000);
-				frameCount = 0;
-				totalTime = 0;
-			}
+			contarFps();
 		}
 		
 	}
 	
 	private void mudarCenario() {
 		if(tileCollisio(38, jogador, cena)==true)
-			new cenario2(janela);
+			new Cenario2(janela);
 	}
 	private void mudarCenario2() {
 		if(tileCollisio(84, jogador, cena)==true)
-			new cenario2(janela);
+			new Cenario2(janela);
 	}
 	private void mudarCenario3() {
 		if(tileCollisio(85, jogador, cena)==true)
-			new cenario2(janela);
+			new Cenario2(janela);
 	}
 	private void continuo() {
 		new Sound(URL.audio("continue.wav")).play();
@@ -594,14 +557,6 @@ public class cenario1 extends cenario{
 		new Sound(URL.audio("desespero.wav")).play();
 	}
 	
-	Font f = new Font("arial", Font.BOLD, 30);
-	Font f2 = new Font("arial", Font.BOLD, 15);
-	Font f3 = new Font("arial", Font.BOLD, 20);
-	
-	public void Fps(Window janela) {
-		int J = (int)averageFPS;
-		janela.drawText("FPS: " + J, 30, 570, Color.GREEN, f3);
-	}
 	public void pal(Window janela) {
 		dialogos.exibirDialogo();
 		janela.drawText(titulo, 105, 400, Color.YELLOW, f3);

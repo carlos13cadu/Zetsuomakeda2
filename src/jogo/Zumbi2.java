@@ -2,7 +2,7 @@ package jogo;
 
 import jplay.URL;
 
-public class Zumbi2 extends ator{
+public class Zumbi2 extends Ator{
 	
 	
 	private double ataque = 0.3;
@@ -69,7 +69,7 @@ public class Zumbi2 extends ator{
 	public void atacar(Jogador jogador) {
 		if(this.collided(jogador)) {
 			Jogador.energia -= this.ataque;
-			if(Jogador.rage < 1000 && cenario1.furia == false) {
+			if(Jogador.rage < 1000 && Cenario1.furia == false) {
 				Jogador.rage += 0.31;
 			}
 		}

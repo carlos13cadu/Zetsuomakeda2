@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class skills {
+public class Skills {
 	/*private int vida = 0;
 	private int usedpt = 0;
 	private JFrame frame;

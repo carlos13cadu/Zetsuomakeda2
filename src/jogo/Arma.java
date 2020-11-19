@@ -2,12 +2,12 @@ package jogo;
 
 import jplay.URL;
 
-public class arma extends itens{
+public class Arma extends Itens{
 	
 	private int dano;
 	private int pente;
 
-	public arma(int x, int y, int dano, int pente, String sprite) {
+	public Arma(int x, int y, int dano, int pente, String sprite) {
 		super(URL.sprite(sprite), 1);
 		this.x = x;
 		this.y = y;

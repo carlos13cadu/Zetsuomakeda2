@@ -3,11 +3,11 @@ package jogo;
 import jplay.Scene;
 import jplay.Sprite;
 
-public class itens extends Sprite {
+public class Itens extends Sprite {
 	
 	public int qtd = 0;
 	
-	public itens(String fileName, int numFrames) {
+	public Itens(String fileName, int numFrames) {
 		super(fileName, numFrames);
 	}
 	

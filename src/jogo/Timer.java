@@ -1,6 +1,6 @@
 package jogo;
 
-public class timer extends Thread{
+public class Timer extends Thread{
 	Thread a1 = new Thread(){     //cria o thread
         @Override
         public void run(){

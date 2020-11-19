@@ -3,7 +3,7 @@ package jogo;
 import jplay.Sprite;
 import jplay.URL;
 
-public class tiro extends Sprite {
+public class Tiro extends Sprite {
 	
 	public static final int LEFT = 1, RIGHT = 2, STOP = 3, UP = 4, DOWN = 5;
 	
@@ -12,7 +12,7 @@ public class tiro extends Sprite {
 	protected boolean movendo = false;
 	protected int direcao = 3;
 	
-	public tiro(double x, double y, int caminho) {
+	public Tiro(double x, double y, int caminho) {
 		super(URL.sprite("bala.png"), 12);
 		this.caminho = caminho;
 		this.x = x;

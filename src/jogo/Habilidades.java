@@ -19,7 +19,7 @@ public class Habilidades {
     private int v2, c100, c200, sort, vel, fr, bd, bv, ts; // Precos das habilidades/atributos
     private Font font;
     
-    private botao vida2, casco100, casco200, sorte, veloc, firerate, bulletdamage, bulletveloc, trippleshot;
+    private Botao vida2, casco100, casco200, sorte, veloc, firerate, bulletdamage, bulletveloc, trippleshot;
     
     public Habilidades(Window janela) {
     	this.janela = janela;
@@ -37,15 +37,15 @@ public class Habilidades {
         
         font = new Font("Lucida Console", Font.TRUETYPE_FONT, 15);
         
-        vida2 = new botao(URL.sprite("vida2button.png"), 2, fx - 10, fy + 180, mouse);
-        casco100 = new botao(URL.sprite("botaobase.png"/*"casco100button.png"*/), 2, fx - 10, fy + 260, mouse);
-        casco200 = new botao(URL.sprite("botaobase.png"/*"casco200button.png"*/), 2, fx - 10, fy + 340, mouse);
-        sorte = new botao(URL.sprite("sorte1.png"/*"agilitybutton.png"*/), 2, fx + 150, fy + 180, mouse);
-        veloc = new botao(URL.sprite("botaobase.png"/*"velocitybutton.png"*/), 2, fx + 150, fy + 260, mouse);
-        firerate = new botao(URL.sprite("botaobase.png"/*"fireratebutton.png"*/), 2, fx + 150, fy + 340, mouse);
-        bulletdamage = new botao(URL.sprite("botaobase.png"/*"damagebutton.png"*/), 2, fx + 310, fy + 180, mouse);
-        bulletveloc = new botao(URL.sprite("botaobase.png"/*"bulletveloc.png"*/), 2, fx + 310, fy + 260, mouse);
-        trippleshot = new botao(URL.sprite("botaobase.png"/*"trippleshot.png"*/), 2, fx + 310, fy + 340, mouse);
+        vida2 = new Botao(URL.sprite("vida2button.png"), 2, fx - 10, fy + 180, mouse);
+        casco100 = new Botao(URL.sprite("botaobase.png"/*"casco100button.png"*/), 2, fx - 10, fy + 260, mouse);
+        casco200 = new Botao(URL.sprite("botaobase.png"/*"casco200button.png"*/), 2, fx - 10, fy + 340, mouse);
+        sorte = new Botao(URL.sprite("sorte1.png"/*"agilitybutton.png"*/), 2, fx + 150, fy + 180, mouse);
+        veloc = new Botao(URL.sprite("botaobase.png"/*"velocitybutton.png"*/), 2, fx + 150, fy + 260, mouse);
+        firerate = new Botao(URL.sprite("botaobase.png"/*"fireratebutton.png"*/), 2, fx + 150, fy + 340, mouse);
+        bulletdamage = new Botao(URL.sprite("botaobase.png"/*"damagebutton.png"*/), 2, fx + 310, fy + 180, mouse);
+        bulletveloc = new Botao(URL.sprite("botaobase.png"/*"bulletveloc.png"*/), 2, fx + 310, fy + 260, mouse);
+        trippleshot = new Botao(URL.sprite("botaobase.png"/*"trippleshot.png"*/), 2, fx + 310, fy + 340, mouse);
         
         v2 = 1;
         c100 = 1900;

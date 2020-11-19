@@ -11,7 +11,7 @@ import jplay.Sound;
 import jplay.URL;
 import jplay.Window;
 
-public class Jogador extends ator{
+public class Jogador extends Ator{
 	
 	private int I,J;
 	private boolean ragefirst = true;
@@ -42,8 +42,8 @@ public class Jogador extends ator{
 		this.setTotalDuration(6000);
 	}
 	
-	controletiro tiros = new controletiro();
-	public void atirar(Window janela, Scene cena, Keyboard teclado, ator inimigo) {
+	ControleDeTiro tiros = new ControleDeTiro();
+	public void atirar(Window janela, Scene cena, Keyboard teclado, Ator inimigo) {
 		//Mouse mouse = janela.getMouse();
 		if(teclado.keyDown(KeyEvent.VK_SPACE)) {
             if(this.muni > 0) {
@@ -88,6 +88,13 @@ public class Jogador extends ator{
 				setSequence(sq[1], sq[2]);
 				direcao = 1;
 			}movendo = true;
+			if(teclado.keyDown(Keyboard.UP_KEY) || teclado.keyDown(KeyEvent.VK_W)){
+				if(this.y > 0)
+					this.y -= velocidade;
+			} else if (teclado.keyDown(Keyboard.DOWN_KEY)|| teclado.keyDown(KeyEvent.VK_S)){
+				if(this.y < janela.getHeight() - 60)
+					this.y += velocidade;
+			}
 		}else if(teclado.keyDown(Keyboard.RIGHT_KEY)|| teclado.keyDown(KeyEvent.VK_D)){
 			if(this.x < janela.getWidth() - 60)
 				this.x += velocidade;
@@ -95,6 +102,13 @@ public class Jogador extends ator{
 				setSequence(sq[2], sq[3]);
 				direcao = 2;
 			}movendo = true;
+			if(teclado.keyDown(Keyboard.UP_KEY) || teclado.keyDown(KeyEvent.VK_W)){
+				if(this.y > 0)
+					this.y -= velocidade;
+			} else if (teclado.keyDown(Keyboard.DOWN_KEY)|| teclado.keyDown(KeyEvent.VK_S)){
+				if(this.y < janela.getHeight() - 60)
+					this.y += velocidade;
+			}
 		}else if(teclado.keyDown(Keyboard.UP_KEY) || teclado.keyDown(KeyEvent.VK_W)){
 			if(this.y > 0)
 				this.y -= velocidade;

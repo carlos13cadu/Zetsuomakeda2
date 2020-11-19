@@ -13,7 +13,7 @@ import jplay.Mouse;
 public class Main {
 	
 	static boolean deat = false;
-	static Vector<botao> buttons = new Vector<botao>();
+	static Vector<Botao> buttons = new Vector<Botao>();
 	
 	static Mouse mouse;
 
@@ -23,11 +23,11 @@ public class Main {
 		mouse = janela.getMouse();
 		Keyboard teclado = janela.getKeyboard();
 		
-		botao b1 = new botao(URL.sprite("botao1.png"), 2, 300, 230, mouse);
-		botao b2 = new botao(URL.sprite("botao2.png"), 2, 301, 282, mouse);
-		botao b3 = new botao(URL.sprite("botao3.png"), 2, 335, 380, mouse);
-		botao b4 = new botao(URL.sprite("botao4.png"), 2, 320, 325, mouse);
-		botao b5 = new botao(URL.sprite("botao5.png"), 2, 300, 380, mouse);
+		Botao b1 = new Botao(URL.sprite("botao1.png"), 2, 300, 230, mouse);
+		Botao b2 = new Botao(URL.sprite("botao2.png"), 2, 301, 282, mouse);
+		Botao b3 = new Botao(URL.sprite("botao3.png"), 2, 335, 380, mouse);
+		Botao b4 = new Botao(URL.sprite("botao4.png"), 2, 320, 325, mouse);
+		Botao b5 = new Botao(URL.sprite("botao5.png"), 2, 300, 380, mouse);
         
 		GameImage plano = new GameImage(URL.sprite("menu.png"));
 		GameImage plano2 = new GameImage(URL.sprite("gameover.png"));
@@ -52,9 +52,9 @@ public class Main {
 			
 			if(mouse.isLeftButtonPressed()) { // Verifica se o botao esquerdo do mouse foi pressionado
                   if(b1.isMouseOn()) { // Verifica se o mouse ta em cima do botao
-                    agua.beber();
+                    Agua.beber();
                     if(deat == false) {
-    					new cenario1(janela);
+    					new Cenario1(janela);
     				}else{
     					deat = false;
     					Jogador.energia = 1000;
