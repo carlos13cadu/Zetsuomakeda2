@@ -198,8 +198,8 @@ public class Cenario1 extends Cenario{
 		adcionarMedkit(5);
 		
 		while(exe) {
-			Jogador.curseseries = 3; //teste
-			Jogador.rage = 1000; //teste
+			//Jogador.curseseries = 3; //teste
+			//Jogador.rage = 1000; //teste
 			
 			startTime = System.nanoTime();
 			//cena.draw();

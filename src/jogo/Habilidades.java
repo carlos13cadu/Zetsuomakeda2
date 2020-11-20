@@ -66,12 +66,6 @@ public class Habilidades {
                     	Jogador.energia += 20;
                     }
                 }
-                if(casco100.isMouseOn()) {
-                    
-                }
-                if(casco200.isMouseOn()) {
-                    
-                }
                 if(sorte.isMouseOn()) {
                 	if (jogador.ragePoints >= sort) {
                     	jogador.ragePoints -= sort;
@@ -80,18 +74,6 @@ public class Habilidades {
                     }
                 }
                 if(veloc.isMouseOn()) {
-                    
-                }
-                if(firerate.isMouseOn()) {
-                    
-                }
-                if(bulletdamage.isMouseOn()) {
-                    
-                }
-                if(bulletveloc.isMouseOn()) {
-                    
-                }
-                if(trippleshot.isMouseOn()) {
                     
                 }
             }
